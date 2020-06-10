@@ -23,7 +23,7 @@ To refresh the database and run the seeder, run:
 Easiest way to get the project running is to run using PHP's internal server. Run the command below:
 `php artisan serve` and get the URL of the project from the command line.
 
-The backend is a Laravel 6 based project. For more info on setting up your dev environment, visit:
+The backend is a Laravel 7 based project. For more info on setting up your dev environment, visit:
 
 [Laravel Installation Guide](https://laravel.com/docs/7.x#installing-laravel)
 
