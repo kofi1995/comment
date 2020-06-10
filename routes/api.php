@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/posts', 'HomeController@getPosts');
+
+Route::get('/post/{post}', 'HomeController@getPost')->name('post');
+
+Route::post('/comment/{post}', 'HomeController@createComment')->name('createComment');

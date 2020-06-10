@@ -19,7 +19,13 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('home-component', require('./components/HomeComponent.vue').default);
+
+Vue.component('post-component', require('./components/PostComponent.vue').default);
+
+import { store } from './store/store';
+
+import {fetchPosts, fetchComments} from './api/DataService';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,4 +35,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    store: store
 });
