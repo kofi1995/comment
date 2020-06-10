@@ -28,6 +28,11 @@ class HomeController extends Controller
         return view('home');
     }
 
+    /**
+     * Method to get Posts from the database
+     * Result is paginated
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getPosts()
     {
         $posts = Post::paginate(10);
@@ -53,6 +58,11 @@ class HomeController extends Controller
         return $posts;
     }
 
+    /**
+     * Method to show a post
+     * @param $post
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showPost($post)
     {
         return view('post', [
@@ -61,13 +71,26 @@ class HomeController extends Controller
     }
 
 
+    /**
+     * Method to get a post, and its comments (nested recursively)
+     * @param Post $post
+     * @return array
+     */
     public function getPost(Post $post)
     {
-        $post->comments = $post->getThreads();
+        $post->comments = $post->getNestedComments();
 
         return $post->toArray();
     }
 
+    /**
+     * Method to add a comment
+     * Comment can be added directly to a post, or a reply to another comment
+     * Code contains constrain to ensure we cannot go more than 3 levels of nested comments
+     * @param Post $post
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function createComment(Post $post, Request $request)
     {
         $request->validate([
@@ -97,7 +120,7 @@ class HomeController extends Controller
 
         $post->comments()->save($comment);
         return response()->json([
-            'comments' => $post->getThreads(),
+            'comments' => $post->getNestedComments(),
             'newComment' => $comment
         ], 201);
     }

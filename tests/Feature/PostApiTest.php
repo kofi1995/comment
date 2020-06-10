@@ -51,7 +51,7 @@ class PostApiTest extends TestCase
             'id' => $this->post->id,
             'title' => $this->post->title,
             'message' => $this->post->message,
-            'comments' => $this->post->getThreads()->toArray(),
+            'comments' => $this->post->getNestedComments()->toArray(),
         ]);
     }
 

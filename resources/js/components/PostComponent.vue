@@ -63,6 +63,7 @@
                 axios.post(`/api/comment/${this.postId}`, {message: this.reply}).then(res => {
                         this.$store.commit('updateComments', res.data.comments);
                         this.reply = '';
+                        alert('Comment Posted');
                         window.scrollTo(0,document.body.scrollHeight);
                 }).catch(error => {
                     console.log(error.response)

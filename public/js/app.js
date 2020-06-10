@@ -2156,6 +2156,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$store.commit('updateComments', res.data.comments);
 
         _this2.reply = '';
+        alert('Comment Posted');
         window.scrollTo(0, document.body.scrollHeight);
       })["catch"](function (error) {
         console.log(error.response);

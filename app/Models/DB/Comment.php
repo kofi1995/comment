@@ -3,32 +3,36 @@
 namespace App\Models\DB;
 
 use Illuminate\Database\Eloquent\Model;
-use App\CommentThreadedCollection;
+use App\CommentNestedCollection;
 use Carbon\Carbon;
 
 class Comment extends Model
 {
     protected $appends = ['posted_date'];
 
-    public function replies()
-    {
-        return $this->hasMany(Comment::class, 'parent_id');
-    }
-
+    /**
+     * Returns CommentNestedCollection instance of each collection
+     * @param array $models
+     * @return CommentNestedCollection|\Illuminate\Database\Eloquent\Collection
+     */
     public function newCollection(array $models = [])
     {
-        return new CommentThreadedCollection($models);
+        return new CommentNestedCollection($models);
     }
 
-    public function setPostedDateAttribute($value)
-    {
-        $this->attributes['posted_date'] = strtolower($value);
-    }
-
+    /**
+     * Accessor to return clean human readable DateTime difference
+     * @return mixed
+     */
     public function getPostedDateAttribute()
     {
         return $this->created_at->diffForHumans();
     }
+
+    /**
+     * Returns Post model via its relationship
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function post()
     {
         return $this->belongsTo('App\Models\DB\Post');
